@@ -1,0 +1,29 @@
+import requests
+
+# Replace with your actual API key
+API_KEY = 'sk-0a7ce313c9dd4ad2bd3fd51b00f2537f'
+API_URL = 'https://api.deepseek.ai/v1/chat'
+
+def send_message_to_chatbot(message):
+    headers = {
+        'Authorization': f'Bearer {API_KEY}',
+        'Content-Type': 'application/json'
+    }
+    
+    data = {
+        'message': message,
+        'context': 'You are a helpful assistant.'
+    }
+    
+    response = requests.post(API_URL, headers=headers, json=data)
+    
+    if response.status_code == 200:
+        return response.json()['response']
+    else:
+        return f"Error: {response.status_code}, {response.text}"
+
+# Example usage
+if __name__ == "__main__":
+    user_message = "Hello, how can I help you today?"
+    chatbot_response = send_message_to_chatbot(user_message)
+    print("Chatbot:", chatbot_response)
